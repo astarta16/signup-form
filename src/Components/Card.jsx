@@ -3,8 +3,9 @@ import {useForm} from 'react-hook-form'
 
 function Card() {
     const {register, handleSubmit} = useForm();
-    const onSubmit = () => {
-        console.log("hey")
+
+    const onSubmit = (data) => {
+        console.log(data)
     };
 
 
@@ -25,11 +26,11 @@ function Card() {
             Try it free 7 days <span>then $20/mo. thereafter</span>
           </p>
         </div>
-        <form onSubmit={handleSubmit}>
-          <input type="text" placeholder="name" />
-          <input type="text" placeholder="surname" />
-          <input type="text" placeholder="email" />
-          <input type="password" placeholder="password" />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <input type="text" placeholder="First name"  {...register("firstName")}/>
+          <input type="text" placeholder="User name"  {...register("userNAme")} />
+          <input type="text" placeholder="Email"  {...register("email")} />
+          <input type="password" placeholder="Password"  {...register("password")} />
           <input type="submit" />
         </form>
       </div>
