@@ -3,15 +3,16 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
-    Container,
-    ContentContainer,
-    TextContainer,
-    FormContainer,
-    Title,
-    Text,
-    Form,
-  } from "./CardStyle";
-
+  Container,
+  ContentContainer,
+  TextContainer,
+  FormContainer,
+  FormStyled,
+  Title,
+  Text,
+  SubmitButton,
+  ErrorMessage,
+} from "./CardStyle";
 
 function Card() {
   const schema = yup.object().shape({
@@ -21,7 +22,11 @@ function Card() {
     password: yup.string().min(2).max(100).required("Password cannot be empty"),
   });
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(schema),
   });
 
@@ -36,25 +41,43 @@ function Card() {
           <Title>Learn to code by watching others</Title>
           <Text>
             See how experienced developers solve problems in real-time. Watching
-            scripted tutorials is great, but understanding how developers think is
-            invaluable.
+            scripted tutorials is great, but understanding how developers think
+            is invaluable.
           </Text>
         </TextContainer>
+
         <FormContainer>
-          <p>
-            Try it free 7 days <span>then $20/mo. thereafter</span>
-          </p>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <input type="text" placeholder="First name" {...register("firstName")} />
-            <p>{errors.firstName?.message}</p>
-            <input type="text" placeholder="User name" {...register("userNAme")} />
-            <p>{errors.userNAme?.message}</p>
-            <input type="text" placeholder="Email" {...register("email")} />
-            <p>{errors.email?.message}</p>
-            <input type="password" placeholder="Password" {...register("password")} />
-            <p>{errors.password?.message}</p>
-            <input type="submit" value="Submit" />
-          </Form>
+          <FormStyled onSubmit={handleSubmit(onSubmit)}>
+            <input
+              type="text"
+              placeholder="First name"
+              {...register("firstName")}
+              className={errors.firstName ? "error" : ""}
+            />
+            <ErrorMessage>{errors.firstName?.message}</ErrorMessage>
+            <input
+              type="text"
+              placeholder="User name"
+              {...register("userNAme")}
+              className={errors.userNAme ? "error" : ""}
+            />
+            <ErrorMessage>{errors.userNAme?.message}</ErrorMessage>
+            <input
+              type="text"
+              placeholder="Email"
+              {...register("email")}
+              className={errors.email ? "error" : ""}
+            />
+            <ErrorMessage>{errors.email?.message}</ErrorMessage>
+            <input
+              type="password"
+              placeholder="Password"
+              {...register("password")}
+              className={errors.password ? "error" : ""}
+            />
+            <ErrorMessage>{errors.password?.message}</ErrorMessage>
+            <SubmitButton type="submit" value="Submit" />
+          </FormStyled>
         </FormContainer>
       </ContentContainer>
     </Container>
